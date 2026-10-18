@@ -1,0 +1,43 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployer": "0xd6aFAE7bE5aC1EeB58C37E1bDd4f4156DFA344C7",
+  "deployedAt": "2026-10-18T14:08:28.371Z",
+  "contracts": {
+    "RoleManager": {
+      "address": "0xEDd9CE0274aA7CE0a4a63F86727E38B688A0c364",
+      "txHash": "0x769f369708fd6a44ab7869d22a442349f37cde5c2612699814203122ca776a46",
+      "blockNumber": 11941570,
+      "gasUsed": "3660155",
+      "constructorArgs": [
+        "0xd6aFAE7bE5aC1EeB58C37E1bDd4f4156DFA344C7"
+      ]
+    },
+    "ProjectEscrow": {
+      "address": "0x1F8F668b7d55461190aD629D1514D66890C23Dcb",
+      "txHash": "0x6ee32b9245f088a56e1f34c24c5a4bcf1ae267158ebe0ffe9a43495ca78b023b",
+      "blockNumber": 11941571,
+      "gasUsed": "19181050",
+      "constructorArgs": [
+        "0xEDd9CE0274aA7CE0a4a63F86727E38B688A0c364"
+      ]
+    },
+    "DisputeManager": {
+      "address": "0x978ed6029251C79cE80AEC446e87cB38A17fD883",
+      "txHash": "0xc59febe26980d9a5fb7e8be5000084f5b41e172928c516d6eb53e0e9d056fa87",
+      "blockNumber": 11941572,
+      "gasUsed": "5549389",
+      "constructorArgs": [
+        "0xEDd9CE0274aA7CE0a4a63F86727E38B688A0c364",
+        "0x1F8F668b7d55461190aD629D1514D66890C23Dcb"
+      ]
+    }
+  },
+  "setupTransactions": [
+    {
+      "label": "escrow.setDisputeManager",
+      "txHash": "0xf8c815227b18d524689f79af06f43e1efc2dd8d35e241b090b24b2d9175d8700",
+      "gasUsed": "133341"
+    }
+  ]
+}

@@ -24,7 +24,7 @@ services:
     runtime: node
     plan: free
     rootDir: D-integration/backend
-    buildCommand: pnpm install && pnpm build
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
     startCommand: node dist/src/server.js
     healthCheckPath: /health
     envVars:
@@ -44,42 +44,53 @@ services:
         value: "11155111"
       - key: CHAIN_CONFIRMATIONS
         value: "2"
+      # Never insert the local demonstration records into the public deployment.
+      - key: SEED_DEMO
+        value: "false"
 
-      # ---- fill these in the Render dashboard (marked manual so nothing is committed) ----
+      # Public Sepolia connection. No wallet private key is ever stored on Render.
       - key: RPC_URL
-        sync: false          # your Alchemy/Infura Sepolia HTTPS URL
+        value: https://ethereum-sepolia-rpc.publicnode.com
       - key: ROLE_MANAGER_ADDRESS
-        sync: false          # from contracts/deployments/sepolia.json
+        value: 0xEDd9CE0274aA7CE0a4a63F86727E38B688A0c364
       - key: PROJECT_ESCROW_ADDRESS
-        sync: false
+        value: 0x1F8F668b7d55461190aD629D1514D66890C23Dcb
       - key: DISPUTE_MANAGER_ADDRESS
-        sync: false
-      # Must EXACTLY match the frontend URL (no trailing slash) or CORS blocks the browser.
-      # Set this AFTER the static site below is created and you know its URL.
+        value: 0x978ed6029251C79cE80AEC446e87cB38A17fD883
+      # Render supplies the frontend's complete public https:// URL automatically.
       - key: FRONTEND_ORIGIN
-        sync: false
+        fromService:
+          type: web
+          name: sc6113-frontend
+          envVarKey: RENDER_EXTERNAL_URL
 
   # ---------------------------------------------------------------- frontend
   - type: web
     name: sc6113-frontend
     runtime: static
     rootDir: D-integration/frontend
-    buildCommand: npm install && npm run build
-    publishDir: dist
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      # React Router handles these paths in the browser. Without this rewrite,
+      # refreshing /projects or /disputes would return a Render 404 page.
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
       # Sepolia chain id in hex, as the frontend expects.
       - key: VITE_CHAIN_ID
         value: "0xaa36a7"
 
-      # ---- fill these in the Render dashboard ----
-      # The backend Web Service URL created above, e.g. https://sc6113-backend.onrender.com
+      # Render supplies the backend's complete public https:// URL automatically.
       - key: VITE_API_BASE_URL
-        sync: false
-      - key: VITE_RPC_URL
-        sync: false          # same Sepolia RPC URL as the backend
+        fromService:
+          type: web
+          name: sc6113-backend
+          envVarKey: RENDER_EXTERNAL_URL
       - key: VITE_ROLE_MANAGER_ADDRESS
-        sync: false
+        value: 0xEDd9CE0274aA7CE0a4a63F86727E38B688A0c364
       - key: VITE_PROJECT_ESCROW_ADDRESS
-        sync: false
+        value: 0x1F8F668b7d55461190aD629D1514D66890C23Dcb
       - key: VITE_DISPUTE_MANAGER_ADDRESS
-        sync: false
+        value: 0x978ed6029251C79cE80AEC446e87cB38A17fD883

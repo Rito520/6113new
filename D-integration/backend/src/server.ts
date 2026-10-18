@@ -5,7 +5,9 @@ import { createDatabase, seedDemoData } from './database.js'
 
 const config = loadConfig()
 const database = createDatabase(config.databasePath)
-seedDemoData(database, config)
+if (process.env.SEED_DEMO === 'true') {
+  seedDemoData(database, config)
+}
 const blockchain = config.mockChain ? new MockBlockchainGateway() : new EvmBlockchainGateway(config)
 const app = createApp({ database, config, blockchain })
 
