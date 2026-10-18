@@ -1,0 +1,85 @@
+# Render Blueprint — deploys the SC6113 backend (Web Service) and frontend (Static Site)
+# from this repository in one step.
+#
+# How to use:
+#   Render dashboard -> New + -> Blueprint -> pick this repository -> Apply.
+#   Render reads this file, creates both services, and then asks you to fill in the
+#   variables marked `sync: false` below (contract addresses, RPC URL, frontend origin).
+#
+# Prerequisite: the three contracts must already be deployed to Sepolia
+# (see D-integration/E-RENDER-DEPLOY.md section 3) so you have real addresses to paste.
+#
+# Notes:
+#   - The backend never holds a private key; it only reads receipts from the chain.
+#     That is why no PRIVATE_KEY appears anywhere in this file.
+#   - DATABASE_PATH points at /tmp because Render's free tier filesystem is read-only
+#     outside /tmp. Data does not survive a restart; the chain remains the source of truth.
+#   - VITE_* values are inlined into the frontend bundle at BUILD time, so changing them
+#     requires a redeploy, not just a restart.
+
+services:
+  # ---------------------------------------------------------------- backend
+  - type: web
+    name: sc6113-backend
+    runtime: node
+    plan: free
+    rootDir: D-integration/backend
+    buildCommand: pnpm install && pnpm build
+    startCommand: node dist/src/server.js
+    healthCheckPath: /health
+    envVars:
+      # node:sqlite requires Node 22.5 or newer.
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: CHAIN_MODE
+        value: evm
+      # Render injects PORT automatically; config.ts already defaults to it.
+      - key: DATABASE_PATH
+        value: /tmp/sc6113.db
+      # Relative to rootDir above, resolving to D-integration/contracts/deployments/abi.
+      - key: CONTRACT_ABI_DIRECTORY
+        value: ../contracts/deployments/abi
+      # Public testnet: require a couple of confirmations.
+      - key: CHAIN_ID
+        value: "11155111"
+      - key: CHAIN_CONFIRMATIONS
+        value: "2"
+
+      # ---- fill these in the Render dashboard (marked manual so nothing is committed) ----
+      - key: RPC_URL
+        sync: false          # your Alchemy/Infura Sepolia HTTPS URL
+      - key: ROLE_MANAGER_ADDRESS
+        sync: false          # from contracts/deployments/sepolia.json
+      - key: PROJECT_ESCROW_ADDRESS
+        sync: false
+      - key: DISPUTE_MANAGER_ADDRESS
+        sync: false
+      # Must EXACTLY match the frontend URL (no trailing slash) or CORS blocks the browser.
+      # Set this AFTER the static site below is created and you know its URL.
+      - key: FRONTEND_ORIGIN
+        sync: false
+
+  # ---------------------------------------------------------------- frontend
+  - type: web
+    name: sc6113-frontend
+    runtime: static
+    rootDir: D-integration/frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    envVars:
+      # Sepolia chain id in hex, as the frontend expects.
+      - key: VITE_CHAIN_ID
+        value: "0xaa36a7"
+
+      # ---- fill these in the Render dashboard ----
+      # The backend Web Service URL created above, e.g. https://sc6113-backend.onrender.com
+      - key: VITE_API_BASE_URL
+        sync: false
+      - key: VITE_RPC_URL
+        sync: false          # same Sepolia RPC URL as the backend
+      - key: VITE_ROLE_MANAGER_ADDRESS
+        sync: false
+      - key: VITE_PROJECT_ESCROW_ADDRESS
+        sync: false
+      - key: VITE_DISPUTE_MANAGER_ADDRESS
+        sync: false
