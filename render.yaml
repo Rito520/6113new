@@ -24,7 +24,7 @@ services:
     runtime: node
     plan: free
     rootDir: D-integration/backend
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    buildCommand: npm ci && npm run build
     startCommand: node dist/src/server.js
     healthCheckPath: /health
     envVars:
