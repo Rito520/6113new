@@ -1,0 +1,210 @@
+{
+  "ranAt": "2026-10-15T07:53:47.133Z",
+  "api": "http://localhost:3001",
+  "rpc": "http://127.0.0.1:8545",
+  "passed": 17,
+  "failed": 0,
+  "timingRetries": 18,
+  "results": [
+    {
+      "name": "ENV-01 health endpoint reports evm mode",
+      "status": "pass",
+      "details": [
+        "PASS — health=ok, chainMode=evm",
+        "PASS — RPC chain id = 31337"
+      ]
+    },
+    {
+      "name": "AUTH-01 seeded wallets log in and expose on-chain roles",
+      "status": "pass",
+      "details": [
+        "PASS — client nonce+signature login -> HTTP 200",
+        "PASS — client /api/me roles=[\"CLIENT\"]",
+        "PASS — freelancer nonce+signature login -> HTTP 200",
+        "PASS — freelancer /api/me roles=[\"FREELANCER\"]",
+        "PASS — arbitrator nonce+signature login -> HTTP 200",
+        "PASS — arbitrator /api/me roles=[\"ARBITRATOR\"]"
+      ]
+    },
+    {
+      "name": "AUTH-02 unregistered wallet is refused at nonce step",
+      "status": "pass",
+      "details": [
+        "PASS — outsider nonce -> HTTP 403 (expected 403)"
+      ]
+    },
+    {
+      "name": "AUTH-03 tampered signature is rejected",
+      "status": "pass",
+      "details": [
+        "PASS — bad signature -> HTTP 401 (expected 401/403)"
+      ]
+    },
+    {
+      "name": "A-01 Client creates project on chain; backend stores it after receipt verification",
+      "status": "pass",
+      "details": [
+        "createProjectWithMilestones mined in block 8 (0x6f5e2b73f91e1ccfef822a9f4262ba2ff60d8b1015d4e0e874980875a79a432d)",
+        "PASS — POST /api/projects -> HTTP 201",
+        "PASS — stored project P-8B0FA7F2 with 2 milestones, chainProjectId=1",
+        "PASS — status=CREATED"
+      ]
+    },
+    {
+      "name": "A-02 negative: unmined transaction hash is rejected by receipt verification",
+      "status": "pass",
+      "details": [
+        "HTTP 409 POST /api/projects/P-8B0FA7F2/accept -> code=TRANSACTION_NOT_MINED message=The transaction is not mined yet.",
+        "PASS — unmined hash -> HTTP 409 code=TRANSACTION_NOT_MINED (expected 409 TRANSACTION_NOT_MINED)"
+      ]
+    },
+    {
+      "name": "A-03 Freelancer accepts; Client funds escrow; project becomes ACTIVE",
+      "status": "pass",
+      "details": [
+        "HTTP 409 POST /api/projects/P-8B0FA7F2/accept -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "PASS — accept -> HTTP 200",
+        "HTTP 409 POST /api/projects/P-8B0FA7F2/fund -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "PASS — fund -> HTTP 200",
+        "PASS — project status=ACTIVE, funded=true",
+        "PASS — on-chain escrow holds 10000000000000000 wei"
+      ]
+    },
+    {
+      "name": "A-04 negative: wrong role actions revert on chain and are refused by REST",
+      "status": "pass",
+      "details": [
+        "PASS — Freelancer cannot fund (onlyClient) (reverted as expected)",
+        "PASS — Client cannot start milestone (onlyFreelancer) (reverted as expected)",
+        "HTTP 403 POST /api/projects -> code=FORBIDDEN_ROLE message=This action requires one of these roles: CLIENT.",
+        "PASS — Freelancer POST /api/projects -> HTTP 403 code=FORBIDDEN_ROLE (expected 403)"
+      ]
+    },
+    {
+      "name": "A-05 Milestone 1: start, submit, approve releases 0.004 ETH",
+      "status": "pass",
+      "details": [
+        "PASS — start recorded",
+        "HTTP 409 POST /api/milestones/M-10CBC15E/submissions -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 201 (accepted)",
+        "PASS — submit -> HTTP 201",
+        "HTTP 409 POST /api/milestones/M-10CBC15E/approvals -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "PASS — approve -> HTTP 200",
+        "PASS — milestone status=APPROVED"
+      ]
+    },
+    {
+      "name": "A-06 Milestone 2: submit, approve; project COMPLETED and freelancer paid in full",
+      "status": "pass",
+      "details": [
+        "HTTP 409 POST /api/milestones/M-A74D54BB/submissions -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 201 (accepted)",
+        "PASS — submit recorded",
+        "HTTP 409 POST /api/milestones/M-A74D54BB/approvals -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "PASS — approve -> HTTP 200",
+        "PASS — project status=COMPLETED",
+        "PASS — on-chain status=6, escrow drained",
+        "PASS — freelancer balance increased by 9831670074930147 wei (net of gas)"
+      ]
+    },
+    {
+      "name": "A-07 audit tables record transactions and decoded events",
+      "status": "pass",
+      "details": [
+        "PASS — 8 transaction records stored",
+        "PASS — event ProjectCreated recorded",
+        "PASS — event ProjectAccepted recorded",
+        "PASS — event ProjectFunded recorded",
+        "PASS — event MilestoneSubmitted recorded",
+        "PASS — event MilestoneApproved recorded"
+      ]
+    },
+    {
+      "name": "NEG-01 backend rejects a milestone submit whose on-chain hash mismatches the REST body",
+      "status": "pass",
+      "details": [
+        "PASS — create -> HTTP 201",
+        "HTTP 409 POST /api/projects/P-2DC91F1D/accept -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "HTTP 409 POST /api/projects/P-2DC91F1D/fund -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "HTTP 409 POST /api/milestones/M-CA2C8473/submissions -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "HTTP 422 POST /api/milestones/M-CA2C8473/submissions -> code=TRANSACTION_ARGUMENT_MISMATCH message=Argument 2 does not match the REST request.",
+        "backend head-block cache lag: retried 1x before HTTP 422 (TRANSACTION_ARGUMENT_MISMATCH)",
+        "PASS — mismatched deliverable hash -> HTTP 422 code=TRANSACTION_ARGUMENT_MISMATCH (expected 422 TRANSACTION_ARGUMENT_MISMATCH)"
+      ]
+    },
+    {
+      "name": "B-01 create, accept, fund the disputed project",
+      "status": "pass",
+      "details": [
+        "PASS — create -> HTTP 201",
+        "HTTP 409 POST /api/projects/P-B2C5758F/accept -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "HTTP 409 POST /api/projects/P-B2C5758F/fund -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "PASS — status=ACTIVE"
+      ]
+    },
+    {
+      "name": "B-02 submit, reject, resubmit, then Freelancer raises a dispute",
+      "status": "pass",
+      "details": [
+        "HTTP 409 POST /api/milestones/M-55E72ADD/submissions -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 201 (accepted)",
+        "HTTP 409 POST /api/milestones/M-55E72ADD/rejections -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "PASS — reject -> HTTP 200",
+        "HTTP 409 POST /api/milestones/M-55E72ADD/submissions -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 201 (accepted)",
+        "HTTP 409 POST /api/disputes -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 201 (accepted)",
+        "PASS — raise dispute -> HTTP 201",
+        "PASS — on-chain disputeId parsed from receipt = 1",
+        "backend dispute record id=D-070A2EC4",
+        "PASS — project status=DISPUTED"
+      ]
+    },
+    {
+      "name": "B-03 dispute is listed, evidence submission works, outsiders blocked",
+      "status": "pass",
+      "details": [
+        "PASS — GET /api/disputes lists record D-070A2EC4 with status=OPEN",
+        "PASS — Client cannot resolve (onlyArbitrator) (reverted as expected)",
+        "HTTP 409 POST /api/disputes/D-070A2EC4/evidence -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 201 (accepted)",
+        "PASS — evidence -> HTTP 201",
+        "PASS — Outsider cannot submit evidence (reverted as expected)"
+      ]
+    },
+    {
+      "name": "B-04 Arbitrator resolves to freelancer; non-arbitrator session is refused",
+      "status": "pass",
+      "details": [
+        "HTTP 403 POST /api/disputes/D-070A2EC4/resolution-record -> code=FORBIDDEN_ROLE message=This action requires one of these roles: ARBITRATOR.",
+        "PASS — client session -> HTTP 403 code=FORBIDDEN_ROLE (expected 403 FORBIDDEN_ROLE)",
+        "HTTP 409 POST /api/disputes/D-070A2EC4/resolution-record -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "PASS — resolution recorded -> HTTP 200",
+        "PASS — disputed milestone status=RESOLVED",
+        "PASS — project returns to ACTIVE"
+      ]
+    },
+    {
+      "name": "C-01 Client cancels an unfunded-created project",
+      "status": "pass",
+      "details": [
+        "PASS — create -> HTTP 201",
+        "HTTP 409 POST /api/projects/P-F15C3292/cancel -> code=INSUFFICIENT_CONFIRMATIONS message=1 confirmation(s) required.",
+        "backend head-block cache lag: retried 1x before HTTP 200 (accepted)",
+        "PASS — cancel -> HTTP 200, status=CANCELLED",
+        "PASS — on-chain status=7 (7 = CANCELLED)",
+        "client balance delta after cancel (gas only, nothing was escrowed): -33695868685380 wei"
+      ]
+    }
+  ]
+}

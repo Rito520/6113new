@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+  <rect width="900" height="640" fill="#f3f4f6"/>
+  <text x="450" y="36" font-size="22" font-weight="700" fill="#111827" text-anchor="middle">MetaMask 切换网络到 Localhost 8546 —— 两个入口都在左上区域</text>
+
+  <!-- Panel A: main wallet view -->
+  <text x="60" y="76" font-size="16" font-weight="700" fill="#374151">① 打开狐狸面板后，长这样</text>
+  <rect x="40" y="90" width="380" height="520" rx="18" fill="#ffffff" stroke="#d1d5db"/>
+  <!-- top bar -->
+  <rect x="56" y="106" width="348" height="56" rx="10" fill="#f9fafb"/>
+  <circle cx="88" cy="134" r="17" fill="#6366f1"/>
+  <text x="88" y="139" font-size="11" fill="#fff" text-anchor="middle">账户</text>
+  <rect x="150" y="118" width="150" height="32" rx="16" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="225" y="139" font-size="13" font-weight="600" fill="#3730a3" text-anchor="middle">以太坊主网 ▾</text>
+  <circle cx="372" cy="134" r="12" fill="none" stroke="#9ca3af" stroke-width="2"/>
+  <!-- red frame around network selector -->
+  <rect x="142" y="110" width="166" height="48" rx="20" fill="none" stroke="#e11d48" stroke-width="4"/>
+  <rect x="142" y="64" width="240" height="34" rx="8" fill="#e11d48"/>
+  <text x="262" y="86" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">入口A：点这个「网络名 ▾」下拉</text>
+  <!-- red frame around avatar -->
+  <rect x="64" y="110" width="48" height="48" rx="24" fill="none" stroke="#0284c7" stroke-width="4" stroke-dasharray="6 4"/>
+  <rect x="40" y="168" width="200" height="30" rx="8" fill="#0284c7"/>
+  <text x="140" y="188" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">入口B：点左上角圆头像</text>
+  <!-- balance -->
+  <text x="230" y="270" font-size="30" font-weight="700" fill="#111827" text-anchor="middle">0 ETH</text>
+  <text x="230" y="296" font-size="12" fill="#6b7280" text-anchor="middle">余额 0 是正常的——因为还在主网！</text>
+  <!-- buy button with red X -->
+  <rect x="150" y="318" width="160" height="44" rx="22" fill="#111827"/>
+  <text x="230" y="345" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">购买 ETH</text>
+  <line x1="140" y1="310" x2="320" y2="370" stroke="#e11d48" stroke-width="6"/>
+  <line x1="320" y1="310" x2="140" y2="370" stroke="#e11d48" stroke-width="6"/>
+  <text x="230" y="392" font-size="13" font-weight="700" fill="#e11d48" text-anchor="middle">永远别点「购买 ETH」！</text>
+  <!-- action row -->
+  <g font-size="12" fill="#374151" text-anchor="middle">
+    <circle cx="110" cy="440" r="20" fill="#eef2ff"/><text x="110" y="475">发送</text>
+    <circle cx="190" cy="440" r="20" fill="#eef2ff"/><text x="190" y="475">兑换</text>
+    <circle cx="270" cy="440" r="20" fill="#eef2ff"/><text x="270" y="475">桥接</text>
+    <circle cx="350" cy="440" r="20" fill="#eef2ff"/><text x="350" y="475">质押</text>
+  </g>
+  <rect x="70" y="500" width="320" height="80" rx="10" fill="#fef9c3" stroke="#facc15"/>
+  <text x="230" y="528" font-size="13" font-weight="700" fill="#713f12" text-anchor="middle">切换成功的标志：</text>
+  <text x="230" y="550" font-size="13" fill="#713f12" text-anchor="middle">左上角变成「Localhost 8546」</text>
+  <text x="230" y="570" font-size="13" fill="#713f12" text-anchor="middle">余额变成 10000 ETH（测试币）</text>
+
+  <!-- Panel B: expanded network list -->
+  <text x="500" y="76" font-size="16" font-weight="700" fill="#374151">② 点开后出现网络列表，往下滚</text>
+  <rect x="480" y="90" width="380" height="520" rx="18" fill="#ffffff" stroke="#d1d5db"/>
+  <text x="670" y="124" font-size="15" font-weight="700" fill="#111827" text-anchor="middle">选择网络</text>
+  <g font-size="14" fill="#374151">
+    <rect x="504" y="140" width="332" height="42" rx="8" fill="#f9fafb"/>
+    <circle cx="526" cy="161" r="9" fill="#627eea"/><text x="546" y="166">以太坊主网（Ethereum）</text>
+    <rect x="504" y="188" width="332" height="42" rx="8" fill="#f9fafb"/>
+    <circle cx="526" cy="209" r="9" fill="#28a0f0"/><text x="546" y="214">Arbitrum One</text>
+    <rect x="504" y="236" width="332" height="42" rx="8" fill="#f9fafb"/>
+    <circle cx="526" cy="257" r="9" fill="#0052ff"/><text x="546" y="262">Base</text>
+    <rect x="504" y="284" width="332" height="42" rx="8" fill="#f9fafb"/>
+    <circle cx="526" cy="305" r="9" fill="#06b6d4"/><text x="546" y="310">Linea</text>
+    <text x="546" y="352" fill="#9ca3af">…（继续往下滚）…</text>
+    <rect x="504" y="368" width="332" height="46" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="3"/>
+    <circle cx="526" cy="391" r="9" fill="#10b981"/><text x="546" y="396" font-weight="700" fill="#065f46">Localhost 8546  ✓</text>
+    <rect x="498" y="362" width="344" height="58" rx="12" fill="none" stroke="#e11d48" stroke-width="4"/>
+    <rect x="530" y="322" width="280" height="34" rx="8" fill="#e11d48"/>
+    <text x="670" y="344" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">点它！切过去，完事</text>
+    <rect x="504" y="440" width="332" height="46" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-dasharray="5 4"/>
+    <text x="670" y="469" font-size="13" fill="#6b7280" text-anchor="middle">＋ 添加网络（列表里没有 Localhost 8546 时才点）</text>
+    <rect x="504" y="498" width="332" height="86" rx="10" fill="#eff6ff" stroke="#3b82f6"/>
+    <text x="520" y="522" font-size="12" fill="#1d4ed8">添加网络四个格子：</text>
+    <text x="520" y="542" font-size="12" fill="#1e3a8a">名称 Localhost 8546 ｜ 链ID 31337</text>
+    <text x="520" y="560" font-size="12" fill="#1e3a8a">RPC URL http://127.0.0.1:8546 ｜ 符号 ETH</text>
+  </g>
+</svg>

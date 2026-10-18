@@ -1,0 +1,47 @@
+# ---- dependencies ----
+node_modules/
+.pnpm-store/
+
+# ---- build output ----
+dist/
+build/
+.vite/
+
+# ---- secrets: NEVER commit these ----
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets.json
+
+# ---- Hardhat / contracts ----
+**/contracts/artifacts/
+**/contracts/cache/
+**/coverage/
+coverage.json
+typechain-types/
+# localhost deployment receipts are regenerated local state
+**/deployments/localhost.json
+**/deployments/localhost-demo-transactions.json
+
+# ---- runtime SQLite database (local demo data, not a deliverable) ----
+**/backend/data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+
+# ---- logs ----
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp

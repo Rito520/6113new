@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="560" viewBox="0 0 380 560" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="380" height="560" fill="#1b1b1f"/>
+  <rect x="10" y="10" width="360" height="540" rx="16" fill="#ffffff"/>
+  <rect x="10" y="10" width="360" height="52" rx="16" fill="#f2f4f6"/>
+  <circle cx="40" cy="36" r="13" fill="#f6851b"/>
+  <text x="36" y="41" font-size="13" font-weight="700" fill="#ffffff">M</text>
+  <text x="62" y="33" font-size="13" font-weight="600" fill="#24272a">MetaMask</text>
+  <text x="62" y="47" font-size="10" fill="#6a737d">Notification</text>
+  <text x="190" y="92" font-size="16" font-weight="700" fill="#24272a" text-anchor="middle">Signature request</text>
+  <rect x="34" y="112" width="312" height="150" rx="10" fill="#f8f9fb" stroke="#e1e4e8"/>
+  <text x="50" y="140" font-size="11" fill="#24272a">SC6113 Freelancer Milestone</text>
+  <text x="50" y="158" font-size="11" fill="#24272a">Payment DApp wants you to</text>
+  <text x="50" y="176" font-size="11" fill="#24272a">sign this message to log in.</text>
+  <text x="50" y="204" font-size="10" fill="#6a737d">This is a LOGIN signature.</text>
+  <text x="50" y="220" font-size="10" fill="#6a737d">It spends nothing.</text>
+  <rect x="34" y="280" width="312" height="120" rx="10" fill="#ffffff" stroke="#e1e4e8"/>
+  <text x="50" y="308" font-size="11" fill="#6a737d">Signing with</text>
+  <text x="50" y="328" font-size="11" font-weight="600" fill="#24272a">Account 1 (0x7099...79C8)</text>
+  <text x="50" y="352" font-size="10" fill="#6a737d">Localhost 8546</text>
+  <text x="50" y="372" font-size="10" fill="#6a737d">Network fee: none (signature)</text>
+  <rect x="34" y="424" width="150" height="46" rx="22" fill="#ffffff" stroke="#cbcfd4"/>
+  <text x="109" y="452" font-size="14" font-weight="600" fill="#24272a" text-anchor="middle">Reject</text>
+  <rect x="196" y="424" width="150" height="46" rx="22" fill="#0376c2"/>
+  <text x="271" y="452" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">Sign</text>
+  <rect x="188" y="416" width="166" height="62" rx="28" fill="none" stroke="#e11d48" stroke-width="4"/>
+  <rect x="188" y="372" width="150" height="30" rx="8" fill="#e11d48"/>
+  <text x="263" y="392" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">点这里 Sign</text>
+  <text x="190" y="520" font-size="11" fill="#6a737d" text-anchor="middle">登录签名弹窗示意（真实弹窗样式略有差异，认准蓝色 Sign）</text>
+</svg>

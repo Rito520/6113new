@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="690" viewBox="0 0 1180 690" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="1180" height="690" fill="#ffffff"/>
+  <text x="24" y="36" font-size="22" font-weight="700" fill="#111827">SC6113 Freelancer Milestone Payment DApp — Integrated Architecture (Member E)</text>
+  <text x="24" y="58" font-size="13" fill="#6b7280">Chain = source of truth · Backend verifies receipts before writing · Frontend drives MetaMask · numbered arrows explained in legend</text>
+
+  <!-- Browser box -->
+  <rect x="24" y="84" width="330" height="220" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="40" y="110" font-size="15" font-weight="700" fill="#3730a3">Browser (Member D)</text>
+  <rect x="40" y="122" width="298" height="76" rx="8" fill="#ffffff" stroke="#818cf8"/>
+  <text x="52" y="146" font-size="13" font-weight="600" fill="#1f2937">React / Vite frontend</text>
+  <text x="52" y="166" font-size="12" fill="#4b5563">Dashboard · Projects · Disputes</text>
+  <text x="52" y="184" font-size="12" fill="#4b5563">Transactions · Event logs</text>
+  <rect x="40" y="210" width="298" height="76" rx="8" fill="#ffffff" stroke="#818cf8"/>
+  <text x="52" y="234" font-size="13" font-weight="600" fill="#1f2937">MetaMask extension</text>
+  <text x="52" y="254" font-size="12" fill="#4b5563">Signs login challenge (no gas)</text>
+  <text x="52" y="272" font-size="12" fill="#4b5563">Sends all state-changing txs</text>
+
+  <!-- Backend box -->
+  <rect x="414" y="84" width="360" height="440" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="430" y="110" font-size="15" font-weight="700" fill="#065f46">Backend REST API :3001 (Member C)</text>
+  <rect x="430" y="122" width="328" height="64" rx="8" fill="#ffffff" stroke="#34d399"/>
+  <text x="442" y="146" font-size="13" font-weight="600" fill="#1f2937">Auth: nonce + wallet signature</text>
+  <text x="442" y="166" font-size="12" fill="#4b5563">Roles read from RoleManager on login</text>
+  <rect x="430" y="198" width="328" height="64" rx="8" fill="#ffffff" stroke="#34d399"/>
+  <text x="442" y="222" font-size="13" font-weight="600" fill="#1f2937">REST routes /api/*</text>
+  <text x="442" y="242" font-size="12" fill="#4b5563">projects · milestones · disputes · audit</text>
+  <rect x="430" y="274" width="328" height="92" rx="8" fill="#ffffff" stroke="#34d399"/>
+  <text x="442" y="298" font-size="13" font-weight="600" fill="#1f2937">EvmBlockchainGateway</text>
+  <text x="442" y="318" font-size="12" fill="#4b5563">receipt status · confirmations · to/from</text>
+  <text x="442" y="336" font-size="12" fill="#4b5563">function + args + value · decoded events</text>
+  <text x="442" y="354" font-size="12" fill="#4b5563">canonical keccak256(JSON) hash match</text>
+  <rect x="430" y="378" width="328" height="130" rx="8" fill="#ffffff" stroke="#34d399"/>
+  <text x="442" y="402" font-size="13" font-weight="600" fill="#1f2937">SQLite (WAL) backend/data/sc6113.db</text>
+  <text x="442" y="422" font-size="12" fill="#4b5563">users · roles · sessions · projects</text>
+  <text x="442" y="440" font-size="12" fill="#4b5563">milestones · submissions · rejections</text>
+  <text x="442" y="458" font-size="12" fill="#4b5563">disputes · evidence · transactions · events</text>
+  <text x="442" y="486" font-size="12" font-style="italic" fill="#047857">Writes only after full verification; no private keys held</text>
+
+  <!-- Chain box -->
+  <rect x="834" y="84" width="322" height="300" rx="12" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="850" y="110" font-size="15" font-weight="700" fill="#92400e">EVM chain (Hardhat :8545 / Sepolia)</text>
+  <rect x="850" y="122" width="290" height="72" rx="8" fill="#ffffff" stroke="#fbbf24"/>
+  <text x="862" y="146" font-size="13" font-weight="600" fill="#1f2937">RoleManager (B)</text>
+  <text x="862" y="166" font-size="12" fill="#4b5563">register / grant / revoke roles</text>
+  <text x="862" y="184" font-size="12" fill="#4b5563">rolesOf(wallet) → CLIENT/FREELANCER/ARBITRATOR</text>
+  <rect x="850" y="206" width="290" height="84" rx="8" fill="#ffffff" stroke="#fbbf24"/>
+  <text x="862" y="230" font-size="13" font-weight="600" fill="#1f2937">ProjectEscrow (B)</text>
+  <text x="862" y="250" font-size="12" fill="#4b5563">create · accept · fund · milestones</text>
+  <text x="862" y="268" font-size="12" fill="#4b5563">submit / reject / approve · cancel</text>
+  <text x="862" y="286" font-size="12" fill="#4b5563">escrow holds funds; ReentrancyGuard</text>
+  <rect x="850" y="302" width="290" height="72" rx="8" fill="#ffffff" stroke="#fbbf24"/>
+  <text x="862" y="326" font-size="13" font-weight="600" fill="#1f2937">DisputeManager (B)</text>
+  <text x="862" y="346" font-size="12" fill="#4b5563">submitEvidence · resolveDispute</text>
+  <text x="862" y="364" font-size="12" fill="#4b5563">release-to-freelancer / refund-to-client</text>
+
+  <!-- Findings box -->
+  <rect x="834" y="404" width="322" height="120" rx="12" fill="#fef2f2" stroke="#ef4444" stroke-width="1.2"/>
+  <text x="850" y="430" font-size="13" font-weight="700" fill="#991b1b">Integration findings (E)</text>
+  <text x="850" y="452" font-size="12" fill="#7f1d1d">• Receipt verify needs ≥1 confirmation; on automine</text>
+  <text x="858" y="468" font-size="12" fill="#7f1d1d">chains a just-mined tx can transiently 409 (retry-safe).</text>
+  <text x="850" y="488" font-size="12" fill="#7f1d1d">• Committed demo SQLite must be reset per fresh chain,</text>
+  <text x="858" y="504" font-size="12" fill="#7f1d1d">else chain_project_id unique-index collision (500).</text>
+
+  <!-- Legend -->
+  <rect x="24" y="548" width="1132" height="120" rx="12" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="40" y="576" font-size="14" font-weight="700" fill="#111827">Data flow (numbers on arrows)</text>
+  <g font-size="12.5" fill="#374151">
+    <circle cx="48" cy="600" r="9" fill="#111827"/><text x="48" y="604" font-size="11" fill="#ffffff" text-anchor="middle">1</text>
+    <text x="64" y="604">Sign the login challenge, or confirm sending a transaction (MetaMask)</text>
+    <circle cx="48" cy="628" r="9" fill="#111827"/><text x="48" y="632" font-size="11" fill="#ffffff" text-anchor="middle">2</text>
+    <text x="64" y="632">State-changing transaction is mined on chain (ProjectEscrow / DisputeManager)</text>
+    <circle cx="48" cy="656" r="9" fill="#111827"/><text x="48" y="660" font-size="11" fill="#ffffff" text-anchor="middle">3</text>
+    <text x="64" y="660">Frontend posts txHash + off-chain text to the backend REST API (with session token)</text>
+    <circle cx="608" cy="600" r="9" fill="#111827"/><text x="608" y="604" font-size="11" fill="#ffffff" text-anchor="middle">4</text>
+    <text x="624" y="604">Backend reads the receipt, decodes events, reads on-chain roles</text>
+    <circle cx="608" cy="628" r="9" fill="#111827"/><text x="608" y="632" font-size="11" fill="#ffffff" text-anchor="middle">5</text>
+    <text x="624" y="632">SQLite is written only after every check passes</text>
+    <circle cx="608" cy="656" r="9" fill="#111827"/><text x="608" y="660" font-size="11" fill="#ffffff" text-anchor="middle">6</text>
+    <text x="624" y="660">Frontend reads display data back over REST (read-only)</text>
+  </g>
+
+  <!-- Arrows -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#374151"/>
+    </marker>
+    <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#047857"/>
+    </marker>
+    <marker id="arrowO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b45309"/>
+    </marker>
+  </defs>
+
+  <line x1="189" y1="198" x2="189" y2="210" stroke="#374151" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <circle cx="206" cy="204" r="9" fill="#111827"/><text x="206" y="208" font-size="11" fill="#ffffff" text-anchor="middle">1</text>
+
+  <path d="M 338 250 C 560 302 700 322 834 250" fill="none" stroke="#b45309" stroke-width="2" marker-end="url(#arrowO)"/>
+  <circle cx="586" cy="298" r="9" fill="#111827"/><text x="586" y="302" font-size="11" fill="#ffffff" text-anchor="middle">2</text>
+
+  <line x1="354" y1="150" x2="414" y2="150" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+  <circle cx="384" cy="132" r="9" fill="#111827"/><text x="384" y="136" font-size="11" fill="#ffffff" text-anchor="middle">3</text>
+
+  <line x1="758" y1="320" x2="834" y2="320" stroke="#047857" stroke-width="2" marker-end="url(#arrowG)"/>
+  <circle cx="796" cy="306" r="9" fill="#111827"/><text x="796" y="310" font-size="11" fill="#ffffff" text-anchor="middle">4</text>
+
+  <line x1="594" y1="366" x2="594" y2="378" stroke="#374151" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <circle cx="612" cy="372" r="9" fill="#111827"/><text x="612" y="376" font-size="11" fill="#ffffff" text-anchor="middle">5</text>
+
+  <path d="M 414 214 C 380 214 380 166 354 166" fill="none" stroke="#6b7280" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <circle cx="384" cy="200" r="9" fill="#111827"/><text x="384" y="204" font-size="11" fill="#ffffff" text-anchor="middle">6</text>
+</svg>

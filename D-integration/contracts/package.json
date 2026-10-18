@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "node scripts/run-hardhat.js compile",
     "test": "node scripts/run-hardhat.js test",
-    "node": "hardhat node",
+    "node": "hardhat node --port 8546",
     "deploy:localhost": "hardhat run scripts/deploy.js --network localhost",
     "demo:localhost": "hardhat run scripts/demo-flow.js --network localhost"
   },
